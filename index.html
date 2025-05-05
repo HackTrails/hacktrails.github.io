@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bug Bounty Writeups</title>
+    <title>Bug Bounty Writeups & Disclosures</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -20,11 +20,11 @@
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            <p class="mt-2 text-gray-500">Loading writeups...</p>
+            <p class="mt-2 text-gray-500">Loading writeups and disclosures...</p>
         </div>
         <div id="error-display" class="text-center text-red-500 py-4" style="display: none;"></div>
         <div id="writeups-list" class="space-y-4">
-            </div>
+        </div>
     </div>
 
     <script>
@@ -35,12 +35,13 @@
         function displayWriteups(writeups) {
             loadingIndicator.style.display = 'none';
             if (writeups.length === 0) {
-                errorDisplay.textContent = "No writeups found.";
+                errorDisplay.textContent = "No writeups/disclosures found.";
                 errorDisplay.style.display = 'block';
                 return;
             }
 
             writeups.forEach(writeup => {
+                console.log("Writeup Item:", writeup);
                 const writeupElement = document.createElement('div');
                 writeupElement.classList.add('bg-white', 'rounded-lg', 'shadow-md', 'p-6', 'border-l-4', 'border-blue-500');
 
@@ -54,13 +55,17 @@
 
                 const dateElement = document.createElement('p');
                 dateElement.classList.add('text-gray-500', 'text-sm', 'mb-2');
-                const publishedDate = writeup.published_date
-                    ? new Date(writeup.published_date).toLocaleDateString('en-US', { 
+                let publishedDate = 'Unknown';
+                if (writeup.published_date) {
+                    console.log("writeup.published_date:", writeup.published_date);
+                    const dateObj =  new Date(writeup.published_date);
+                    console.log("dateObj:", dateObj);
+                     publishedDate = dateObj.toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric'
-                    })
-                    : 'Unknown';
+                    });
+                }
                 dateElement.textContent = `Published: ${publishedDate}`;
 
                 const summaryElement = document.createElement('p');
@@ -96,11 +101,21 @@
                     return response.json();
                 })
                 .then(data => {
+                    // Process the date correctly.
                     const writeups = data.map(item => {
-                         if (item.published_date) {
-                            item.published_date = new Date(item.published_date.seconds * 1000);
-                         }
-                         return item;
+                        console.log("Original Item:", item);
+                        if (item.published_date && item.published_date !== null) {
+                            if (typeof item.published_date === 'string') {
+                                item.published_date = new Date(item.published_date);
+                            } else if (item.published_date.seconds) {
+                                item.published_date = new Date(item.published_date.seconds * 1000);
+                            }
+                        }
+                        else{
+                            item.published_date = null;
+                        }
+                        console.log("Modified Item:", item);
+                        return item;
                     });
                     displayWriteups(writeups);
                 })
