@@ -101,9 +101,7 @@
                     return response.json();
                 })
                 .then(data => {
-                    // Process the date correctly.
                     const writeups = data.map(item => {
-                        console.log("Original Item:", item);
                         if (item.published_date && item.published_date !== null) {
                             if (typeof item.published_date === 'string') {
                                 item.published_date = new Date(item.published_date);
@@ -127,7 +125,6 @@
                 });
         }
 
-        // Fetch and display writeups when the page loads
         fetchWriteups();
     </script>
 </body>
