@@ -5,120 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hack Trails</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        body.dark {
-            background-color: #1a202c;
-            color: #f7fafc;
-        }
-        body.dark .bg-white {
-            background-color: #2d3748;
-        }
-        body.dark .text-gray-800 {
-            color: #f7fafc;
-        }
-        body.dark .text-gray-700 {
-            color: #edf2f7;
-        }
-        body.dark .text-gray-600 {
-            color: #cbd5e0;
-        }
-        body.dark .text-gray-500 {
-            color: #a0aec0;
-        }
-        body.dark .border-gray-300 {
-            border-color: #4a5568;
-        }
-        body.dark .hover:bg-gray-200 {
-            --tw-bg-opacity: 1;
-            background-color: rgba(74,85,104, var(--tw-bg-opacity));
-        }
-        body.dark .bg-blue-500 {
-            --tw-bg-opacity: 1;
-            background-color: rgba(66, 153, 225, var(--tw-bg-opacity));
-        }
-        body.dark .border-blue-500 {
-            border-color: rgba(66, 153, 225, var(--tw-border-opacity));
-        }
-        body.dark .hover:bg-blue-600 {
-            --tw-bg-opacity: 1;
-            background-color: rgba(56, 131, 215, var(--tw-bg-opacity));
-        }
-        body.dark select {
-            background-color: #2d3748;
-            color: #f7fafc;
-            border-color: #4a5568;
-        }
-        body.dark select option {
-            background-color: #2d3748;
-            color: #f7fafc;
-        }
-        body.dark #search-input {
-            background-color: #2d3748;
-            color: #f7fafc;
-            border-color: #4a5568;
-        }
-        body.dark #search-input::placeholder {
-            color: #a0aec0;
-        }
-        #darkModeToggle {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-            padding: 0.25rem;
-            opacity: 0.8;
-            transition: opacity 0.3s ease-in-out;
-        }
-        #darkModeToggle:hover {
-            opacity: 1;
-        }
-        #darkModeToggle svg {
-            display: block;
-        }
-
-        .generic-title-font {
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
+        body { font-family: 'Inter', sans-serif; }
+        .generic-title-font { font-family: 'Orbitron', sans-serif; letter-spacing: 0.05em; text-transform: uppercase; }
+        body.dark { background-color: #1a202c; color: #f7fafc; }
+        body.dark .bg-white { background-color: #2d3748; }
+        body.dark .text-gray-800 { color: #f7fafc; }
+        body.dark .text-gray-700 { color: #edf2f7; }
+        body.dark .text-gray-600 { color: #cbd5e0; }
+        body.dark .text-gray-500 { color: #a0aec0; }
+        body.dark .border-gray-300 { border-color: #4a5568; }
+        body.dark [data-dark-bg="gray-200"] { background-color: #4a5568; }
+        body.dark [data-dark-bg="blue-500"] { background-color: #4299e1; }
+        body.dark [data-dark-border="blue-500"] { border-color: #4299e1; }
+        body.dark [data-dark-bg="blue-600"] { background-color: #3883d7; }
+        body.dark select, body.dark #search-input { background-color: #2d3748; color: #f7fafc; border-color: #4a5568; }
+        body.dark select option { background-color: #2d3748; color: #f7fafc; }
+        body.dark #search-input::placeholder { color: #a0aec0; }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VNG8CTJEQ6"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-VNG8CTJEQ6');
 </script>
 <body class="bg-gray-100 p-6 relative">
-    <button id="darkModeToggle" aria-label="Toggle Dark Mode">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-fill" viewBox="0 0 16 16">  <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.318q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/></svg>
-    </button>
+    <button id="darkModeToggle" class="absolute top-4 right-4 bg-transparent border-none cursor-pointer text-2xl p-1 opacity-80 hover:opacity-100" aria-label="Toggle Dark Mode"></button>
     <div class="container max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
-        <h1 class="text-3xl font-semibold text-blue-600 text-center mb-6 generic-title-font">Hack Trails</h1>  <p class="text-lg text-gray-700 text-center mb-8">Bug Bounty Writeups & Disclosures</p>
-
+        <h1 class="text-3xl font-semibold text-blue-600 text-center mb-6 generic-title-font">Hack Trails</h1>
+        <p class="text-lg text-gray-700 text-center mb-8">Bug Bounty Writeups & Disclosures</p>
         <div class="mb-6 flex items-center space-x-4">
-            <input type="text" id="search-input" placeholder="Search by title, author..."
-                   class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            <input type="text" id="search-input" placeholder="Search by title, author..." class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
         </div>
-
         <div class="mb-4 flex items-center space-x-4">
-            <label for="itemsPerPage" class="block text-sm font-medium text-gray-700">Items per page:</label>
-            <select id="itemsPerPage" class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-            </select>
+            <label for="itemsPerPage" class="text-sm font-medium text-gray-700">Items per page:</label>
+            <select id="itemsPerPage" class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></select>
         </div>
-
         <div class="mb-4 flex items-center space-x-4">
-            <span class="block text-sm font-medium text-gray-700">Source:</span>
+            <span class="text-sm font-medium text-gray-700">Source:</span>
             <label class="flex items-center space-x-2">
                 <input type="checkbox" id="source-hackerone" value="hackerone" class="h-4 w-4 text-blue-500 border-gray-300 rounded focus:ring-blue-500">
                 <span class="text-sm text-gray-700">HackerOne</span>
@@ -128,249 +55,179 @@
                 <span class="text-sm text-gray-700">Medium</span>
             </label>
         </div>
-
-        <div id="loading-indicator" class="text-center py-4">
+        <div id="loading-indicator" class="text-center py-4 hidden">
             <svg class="animate-spin h-5 w-5 text-blue-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
             <p class="mt-2 text-gray-500">Loading writeups...</p>
         </div>
-
-        <div id="error-display" class="text-center text-red-500 py-4" style="display: none;"></div>
-
-        <div id="writeups-list" class="space-y-4">
-        </div>
-
-        <div id="pagination-controls" class="flex justify-center mt-6 space-x-2">
-        </div>
+        <div id="error-display" class="text-center text-red-500 py-4 hidden"></div>
+        <div id="writeups-list" class="space-y-4"></div>
+        <div id="pagination-controls" class="flex justify-center mt-6 space-x-2"></div>
     </div>
-
     <script>
-        const writeupsList = document.getElementById('writeups-list');
-        const loadingIndicator = document.getElementById('loading-indicator');
-        const errorDisplay = document.getElementById('error-display');
-        const searchInput = document.getElementById('search-input');
-        const paginationControls = document.getElementById('pagination-controls');
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        const body = document.body;
-        const itemsPerPageSelect = document.getElementById('itemsPerPage');
-        const hackeroneCheckbox = document.getElementById('source-hackerone');
-        const mediumCheckbox = document.getElementById('source-medium');
+        const $ = id => document.getElementById(id);
+        const list = $('writeups-list'), load = $('loading-indicator'), error = $('error-display'), search = $('search-input'),
+              pages = $('pagination-controls'), toggle = $('darkModeToggle'), body = document.body,
+              perPage = $('itemsPerPage'), h1Check = $('source-hackerone'), medCheck = $('source-medium');
+        
+        let writeups = [], filtered = [], itemsPerPage = parseInt(localStorage.getItem('itemsPerPage')) || 5,
+            sources = JSON.parse(localStorage.getItem('sourceFilter')) || ['hackerone', 'medium'], page = 1;
 
-        let allWriteups = [];
-        let filteredWriteups = [];
-        let itemsPerPage = localStorage.getItem('itemsPerPage') ? parseInt(localStorage.getItem('itemsPerPage')) : 5;
-        let sourceFilter = JSON.parse(localStorage.getItem('sourceFilter')) || ['hackerone', 'medium'];
-        let currentPage = 1;
+        const icons = {
+            moon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-fill" viewBox="0 0 16 16"><path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.318q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/></svg>`,
+            sun: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sun-fill" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/></svg>`
+        };
 
-        const moonSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-fill" viewBox="0 0 16 16">  <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.318q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/></svg>`;
-        const sunSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sun-fill" viewBox="0 0 16 16">  <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/></svg>`;
-
-        function toggleDarkMode() {
+        const toggleDark = () => {
             body.classList.toggle('dark');
-            const isDarkMode = body.classList.contains('dark');
-            localStorage.setItem('darkMode', isDarkMode);
-            darkModeToggle.innerHTML = isDarkMode ? sunSVG : moonSVG;
-        }
+            const dark = body.classList.contains('dark');
+            localStorage.setItem('darkMode', dark);
+            toggle.innerHTML = dark ? icons.sun : icons.moon;
+        };
 
-        const savedDarkMode = localStorage.getItem('darkMode');
-        if (savedDarkMode === 'true') {
+        if (localStorage.getItem('darkMode') === 'true') {
             body.classList.add('dark');
-            darkModeToggle.innerHTML = sunSVG;
+            toggle.innerHTML = icons.sun;
         } else {
-            darkModeToggle.innerHTML = moonSVG;
+            toggle.innerHTML = icons.moon;
         }
+        toggle.addEventListener('click', toggleDark);
 
-        darkModeToggle.addEventListener('click', toggleDarkMode);
+        [5, 10, 20, 50, 100].forEach(v => {
+            const opt = document.createElement('option');
+            opt.value = opt.textContent = v;
+            perPage.appendChild(opt);
+        });
+        perPage.value = itemsPerPage;
 
-        const validItemsPerPage = [5, 10, 20, 50, 100];
-        validItemsPerPage.forEach(value => {
-            const option = document.createElement('option');
-            option.value = value;
-            option.textContent = value;
-            itemsPerPageSelect.appendChild(option);
+        perPage.addEventListener('change', e => {
+            itemsPerPage = +e.target.value;
+            localStorage.setItem('itemsPerPage', itemsPerPage);
+            page = 1;
+            filter();
         });
 
-        itemsPerPageSelect.value = itemsPerPage;
-        itemsPerPageSelect.addEventListener('change', (event) => {
-            const newItemsPerPage = parseInt(event.target.value);
-            itemsPerPage = newItemsPerPage;
-            localStorage.setItem('itemsPerPage', newItemsPerPage);
-            currentPage = 1;
-            filterWriteups();
-        });
+        h1Check.checked = sources.includes('hackerone');
+        medCheck.checked = sources.includes('medium');
 
-        hackeroneCheckbox.checked = sourceFilter.includes('hackerone');
-        mediumCheckbox.checked = sourceFilter.includes('medium');
+        const updateSources = () => {
+            sources = [];
+            if (h1Check.checked) sources.push('hackerone');
+            if (medCheck.checked) sources.push('medium');
+            localStorage.setItem('sourceFilter', JSON.stringify(sources));
+            page = 1;
+            filter();
+        };
 
-        function updateSourceFilter() {
-            sourceFilter = [];
-            if (hackeroneCheckbox.checked) sourceFilter.push('hackerone');
-            if (mediumCheckbox.checked) sourceFilter.push('medium');
-            localStorage.setItem('sourceFilter', JSON.stringify(sourceFilter));
-            currentPage = 1;
-            filterWriteups();
-        }
+        h1Check.addEventListener('change', updateSources);
+        medCheck.addEventListener('change', updateSources);
 
-        hackeroneCheckbox.addEventListener('change', updateSourceFilter);
-        mediumCheckbox.addEventListener('change', updateSourceFilter);
+        const createWriteup = w => {
+            const div = document.createElement('div');
+            div.className = 'bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500';
+            const a = document.createElement('a');
+            a.href = w.link || '#';
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.className = 'text-xl font-semibold text-gray-800 mb-2 hover:underline';
+            a.textContent = w.title || 'No Title';
+            div.appendChild(a);
+            const p1 = document.createElement('p');
+            p1.className = 'text-gray-600 mb-1';
+            let author = w.author?.replace(/@?\.medium\.com$/, '').trim() || 'Unknown';
+            p1.textContent = `Author: ${author}`;
+            div.appendChild(p1);
+            const p2 = document.createElement('p');
+            p2.className = 'text-gray-500 text-sm mb-2';
+            let date = w.published_date instanceof Date && !isNaN(w.published_date) 
+                ? w.published_date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) 
+                : 'Unknown';
+            p2.textContent = `Published: ${date}`;
+            div.appendChild(p2);
+            if (w.hacktivity_summary) {
+                const p3 = document.createElement('p');
+                p3.className = 'text-gray-700 mb-3';
+                p3.textContent = w.hacktivity_summary;
+                div.appendChild(p3);
+            }
+            return div;
+        };
 
-        function displayWriteups(writeups) {
-            writeupsList.innerHTML = '';
-            errorDisplay.style.display = 'none';
-
-            const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            const paginatedWriteups = writeups.slice(startIndex, endIndex);
-
-            if (paginatedWriteups.length === 0 && writeups.length > 0) {
-                currentPage = Math.max(1, Math.ceil(writeups.length / itemsPerPage));
-                displayWriteups(writeups);
-                return;
-            } else if (paginatedWriteups.length === 0) {
-                errorDisplay.textContent = "No writeups found.";
-                errorDisplay.style.display = 'block';
-                paginationControls.innerHTML = '';
+        const show = w => {
+            list.innerHTML = '';
+            error.className = 'text-center text-red-500 py-4 hidden';
+            const start = (page - 1) * itemsPerPage, end = start + itemsPerPage, slice = w.slice(start, end);
+            if (!slice.length && w.length) {
+                page = Math.max(1, Math.ceil(w.length / itemsPerPage));
+                show(w);
                 return;
             }
+            if (!slice.length) {
+                error.textContent = 'No writeups found.';
+                error.className = 'text-center text-red-500 py-4';
+                pages.innerHTML = '';
+                return;
+            }
+            slice.forEach(w => list.appendChild(createWriteup(w)));
+            paginate(w);
+        };
 
-            paginatedWriteups.forEach(writeup => {
-                const writeupElement = document.createElement('div');
-                writeupElement.classList.add('bg-white', 'rounded-lg', 'shadow-md', 'p-6', 'border-l-4', 'border-blue-500');
-                const titleLink = document.createElement('a');
-                titleLink.href = writeup.link || '#';
-                titleLink.target = '_blank';
-                titleLink.rel = 'noopener noreferrer';
-                titleLink.classList.add('text-xl', 'font-semibold', 'text-gray-800', 'mb-2', 'hover:underline');
-                titleLink.textContent = writeup.title || 'No Title';
-                writeupElement.appendChild(titleLink);
-                const authorElement = document.createElement('p');
-                authorElement.classList.add('text-gray-600', 'mb-1');
-                let authorName = writeup.author;
-                if (authorName && typeof authorName === 'string' && authorName.includes('.medium.com')) {
-                    authorName = authorName.replace(/@?\.medium\.com$/, '').trim();
-                }
-                authorElement.textContent = `Author: ${authorName || 'Unknown'}`;
-                writeupElement.appendChild(authorElement);
-                const dateElement = document.createElement('p');
-                dateElement.classList.add('text-gray-500', 'text-sm', 'mb-2');
-                let publishedDate = 'Unknown';
-                if (writeup.published_date instanceof Date && !isNaN(writeup.published_date)) {
-                     publishedDate = writeup.published_date.toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                    });
-                }
-                dateElement.textContent = `Published: ${publishedDate}`;
-                writeupElement.appendChild(dateElement);
-                if (writeup.hacktivity_summary) {
-                    const summaryElement = document.createElement('p');
-                    summaryElement.classList.add('text-gray-700', 'mb-3');
-                    summaryElement.textContent = writeup.hacktivity_summary;
-                    writeupElement.appendChild(summaryElement);
-                }
-                writeupsList.appendChild(writeupElement);
-            });
-
-            renderPaginationControls(writeups);
-        }
-
-        function renderPaginationControls(writeups) {
-            paginationControls.innerHTML = '';
-            const totalPages = Math.ceil(writeups.length / itemsPerPage);
-
-            if (totalPages <= 1) return;
-
-            for (let i = 1; i <= totalPages; i++) {
-                const pageButton = document.createElement('button');
-                pageButton.textContent = i;
-                pageButton.classList.add('px-3', 'py-1', 'rounded', 'border', 'border-gray-300', 'hover:bg-gray-200');
-                if (i === currentPage) {
-                    pageButton.classList.add('bg-blue-500', 'text-white', 'border-blue-500', 'hover:bg-blue-600');
-                }
-                pageButton.addEventListener('click', () => {
-                    currentPage = i;
-                    displayWriteups(filteredWriteups);
+        const paginate = w => {
+            pages.innerHTML = '';
+            const total = Math.ceil(w.length / itemsPerPage);
+            if (total <= 1) return;
+            for (let i = 1; i <= total; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                btn.className = `px-3 py-1 rounded border border-gray-300 hover:bg-gray-200 data-[dark-bg=gray-200] ${i === page ? 'bg-blue-500 text-white border-blue-500 hover:bg-blue-600 data-[dark-bg=blue-500] data-[dark-border=blue-500] data-[dark-bg=blue-600]' : ''}`;
+                btn.addEventListener('click', () => {
+                    page = i;
+                    show(filtered);
                 });
-                paginationControls.appendChild(pageButton);
+                pages.appendChild(btn);
             }
-        }
+        };
 
-        function filterWriteups() {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            let newFilteredWriteups = allWriteups;
+        const filter = () => {
+            const term = search.value.toLowerCase().trim();
+            filtered = writeups.filter(w => (sources.length ? sources.includes(w.source) : false) && (
+                w.title?.toLowerCase().includes(term) ||
+                w.author?.toLowerCase().includes(term) ||
+                w.hacktivity_summary?.toLowerCase().includes(term)
+            ));
+            page = 1;
+            show(filtered);
+        };
 
-            if (sourceFilter.length > 0) {
-                newFilteredWriteups = newFilteredWriteups.filter(writeup => sourceFilter.includes(writeup.source));
-            } else {
-                newFilteredWriteups = [];
-            }
-
-            newFilteredWriteups = newFilteredWriteups.filter(writeup => {
-                const titleMatch = writeup.title?.toLowerCase().includes(searchTerm);
-                const authorMatch = writeup.author?.toLowerCase().includes(searchTerm);
-                const summaryMatch = writeup.hacktivity_summary?.toLowerCase().includes(searchTerm) || false;
-                return titleMatch || authorMatch || summaryMatch;
-            });
-
-            filteredWriteups = newFilteredWriteups;
-            currentPage = 1;
-            displayWriteups(filteredWriteups);
-        }
-
-        function fetchWriteups() {
-            loadingIndicator.style.display = 'block';
-            errorDisplay.style.display = 'none';
-            writeupsList.innerHTML = '';
-            paginationControls.innerHTML = '';
-            const cloudFunctionUrl = 'https://get-writeups-5kluvqgioa-uc.a.run.app/get_writeups';
-            fetch(cloudFunctionUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
+        const fetchWriteups = async () => {
+            load.className = 'text-center py-4';
+            error.className = 'text-center text-red-500 py-4 hidden';
+            list.innerHTML = pages.innerHTML = '';
+            try {
+                const res = await fetch('https://get-writeups-5kluvqgioa-uc.a.run.app/get_writeups');
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                const data = await res.json();
+                writeups = data.map(item => {
+                    let date = null;
+                    if (item.published_date) {
+                        date = new Date(typeof item.published_date === 'string' ? item.published_date : item.published_date.seconds * 1000);
+                        if (isNaN(date)) date = null;
                     }
-                    return response.json();
-                })
-                .then(data => {
-                    const processedWriteups = data.map(item => {
-                         let dateObj = null;
-                         if (item.published_date) {
-                            if (typeof item.published_date === 'string') {
-                                dateObj = new Date(item.published_date);
-                            } else if (item.published_date.seconds) {
-                                dateObj = new Date(item.published_date.seconds * 1000);
-                            }
-                            if (dateObj instanceof Date && !isNaN(dateObj)) {
-                                item.published_date = dateObj;
-                            } else {
-                                item.published_date = null;
-                            }
-                        } else {
-                             item.published_date = null;
-                         }
-                        return item;
-                    });
-                    processedWriteups.sort((a, b) => {
-                        const dateA = a.published_date ? a.published_date.getTime() : 0;
-                        const dateB = b.published_date ? b.published_date.getTime() : 0;
-                        return dateB - dateA;
-                    });
-                    allWriteups = processedWriteups;
-                    loadingIndicator.style.display = 'none';
-                    hackeroneCheckbox.checked = sourceFilter.includes('hackerone');
-                    mediumCheckbox.checked = sourceFilter.includes('medium');
-                    searchInput.addEventListener('input', filterWriteups);
-                    filterWriteups();
-                })
-                .catch(error => {
-                    console.error("Fetch Error:", error);
-                    loadingIndicator.style.display = 'none';
-                    errorDisplay.textContent = "Failed to load writeups. Please check the console for details or try again later.";
-                    errorDisplay.style.display = 'block';
-                });
-        }
+                    return { ...item, published_date: date };
+                }).sort((a, b) => (b.published_date?.getTime() || 0) - (a.published_date?.getTime() || 0));
+                load.className = 'text-center py-4 hidden';
+                h1Check.checked = sources.includes('hackerone');
+                medCheck.checked = sources.includes('medium');
+                search.addEventListener('input', filter);
+                filter();
+            } catch (e) {
+                load.className = 'text-center py-4 hidden';
+                error.textContent = 'Failed to load writeups. Please try again later.';
+                error.className = 'text-center text-red-500 py-4';
+            }
+        };
 
         fetchWriteups();
     </script>
