@@ -56,6 +56,14 @@
             background-color: #2d3748;
             color: #f7fafc;
         }
+        body.dark #search-input {
+            background-color: #2d3748;
+            color: #f7fafc;
+            border-color: #4a5568;
+        }
+        body.dark #search-input::placeholder {
+            color: #a0aec0;
+        }
         #darkModeToggle {
             position: absolute;
             top: 1rem;
@@ -82,7 +90,7 @@
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
-    </head>
+</head>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VNG8CTJEQ6"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -109,6 +117,18 @@
             </select>
         </div>
 
+        <div class="mb-4 flex items-center space-x-4">
+            <span class="block text-sm font-medium text-gray-700">Source:</span>
+            <label class="flex items-center space-x-2">
+                <input type="checkbox" id="source-hackerone" value="hackerone" class="h-4 w-4 text-blue-500 border-gray-300 rounded focus:ring-blue-500">
+                <span class="text-sm text-gray-700">HackerOne</span>
+            </label>
+            <label class="flex items-center space-x-2">
+                <input type="checkbox" id="source-medium" value="medium" class="h-4 w-4 text-blue-500 border-gray-300 rounded focus:ring-blue-500">
+                <span class="text-sm text-gray-700">Medium</span>
+            </label>
+        </div>
+
         <div id="loading-indicator" class="text-center py-4">
             <svg class="animate-spin h-5 w-5 text-blue-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -120,10 +140,10 @@
         <div id="error-display" class="text-center text-red-500 py-4" style="display: none;"></div>
 
         <div id="writeups-list" class="space-y-4">
-            </div>
+        </div>
 
         <div id="pagination-controls" class="flex justify-center mt-6 space-x-2">
-            </div>
+        </div>
     </div>
 
     <script>
@@ -135,9 +155,13 @@
         const darkModeToggle = document.getElementById('darkModeToggle');
         const body = document.body;
         const itemsPerPageSelect = document.getElementById('itemsPerPage');
+        const hackeroneCheckbox = document.getElementById('source-hackerone');
+        const mediumCheckbox = document.getElementById('source-medium');
 
         let allWriteups = [];
+        let filteredWriteups = [];
         let itemsPerPage = localStorage.getItem('itemsPerPage') ? parseInt(localStorage.getItem('itemsPerPage')) : 5;
+        let sourceFilter = JSON.parse(localStorage.getItem('sourceFilter')) || ['hackerone', 'medium'];
         let currentPage = 1;
 
         const moonSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-fill" viewBox="0 0 16 16">  <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.318q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/></svg>`;
@@ -174,8 +198,23 @@
             itemsPerPage = newItemsPerPage;
             localStorage.setItem('itemsPerPage', newItemsPerPage);
             currentPage = 1;
-            displayWriteups(allWriteups);
+            filterWriteups();
         });
+
+        hackeroneCheckbox.checked = sourceFilter.includes('hackerone');
+        mediumCheckbox.checked = sourceFilter.includes('medium');
+
+        function updateSourceFilter() {
+            sourceFilter = [];
+            if (hackeroneCheckbox.checked) sourceFilter.push('hackerone');
+            if (mediumCheckbox.checked) sourceFilter.push('medium');
+            localStorage.setItem('sourceFilter', JSON.stringify(sourceFilter));
+            currentPage = 1;
+            filterWriteups();
+        }
+
+        hackeroneCheckbox.addEventListener('change', updateSourceFilter);
+        mediumCheckbox.addEventListener('change', updateSourceFilter);
 
         function displayWriteups(writeups) {
             writeupsList.innerHTML = '';
@@ -185,11 +224,11 @@
             const endIndex = startIndex + itemsPerPage;
             const paginatedWriteups = writeups.slice(startIndex, endIndex);
 
-            if (paginatedWriteups.length === 0 && allWriteups.length > 0) {
-                currentPage = Math.max(1, Math.ceil(allWriteups.length / itemsPerPage));
-                displayWriteups(allWriteups);
+            if (paginatedWriteups.length === 0 && writeups.length > 0) {
+                currentPage = Math.max(1, Math.ceil(writeups.length / itemsPerPage));
+                displayWriteups(writeups);
                 return;
-            } else if (paginatedWriteups.length === 0 && allWriteups.length === 0) {
+            } else if (paginatedWriteups.length === 0) {
                 errorDisplay.textContent = "No writeups found.";
                 errorDisplay.style.display = 'block';
                 paginationControls.innerHTML = '';
@@ -235,12 +274,12 @@
                 writeupsList.appendChild(writeupElement);
             });
 
-            renderPaginationControls(writeups.length);
+            renderPaginationControls(writeups);
         }
 
-        function renderPaginationControls(totalItems) {
+        function renderPaginationControls(writeups) {
             paginationControls.innerHTML = '';
-            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            const totalPages = Math.ceil(writeups.length / itemsPerPage);
 
             if (totalPages <= 1) return;
 
@@ -253,7 +292,7 @@
                 }
                 pageButton.addEventListener('click', () => {
                     currentPage = i;
-                    displayWriteups(allWriteups);
+                    displayWriteups(filteredWriteups);
                 });
                 paginationControls.appendChild(pageButton);
             }
@@ -261,12 +300,22 @@
 
         function filterWriteups() {
             const searchTerm = searchInput.value.toLowerCase().trim();
-            const filteredWriteups = allWriteups.filter(writeup => {
+            let newFilteredWriteups = allWriteups;
+
+            if (sourceFilter.length > 0) {
+                newFilteredWriteups = newFilteredWriteups.filter(writeup => sourceFilter.includes(writeup.source));
+            } else {
+                newFilteredWriteups = [];
+            }
+
+            newFilteredWriteups = newFilteredWriteups.filter(writeup => {
                 const titleMatch = writeup.title?.toLowerCase().includes(searchTerm);
                 const authorMatch = writeup.author?.toLowerCase().includes(searchTerm);
                 const summaryMatch = writeup.hacktivity_summary?.toLowerCase().includes(searchTerm) || false;
                 return titleMatch || authorMatch || summaryMatch;
             });
+
+            filteredWriteups = newFilteredWriteups;
             currentPage = 1;
             displayWriteups(filteredWriteups);
         }
@@ -310,9 +359,10 @@
                     });
                     allWriteups = processedWriteups;
                     loadingIndicator.style.display = 'none';
-                    currentPage = 1;
-                    displayWriteups(allWriteups);
+                    hackeroneCheckbox.checked = sourceFilter.includes('hackerone');
+                    mediumCheckbox.checked = sourceFilter.includes('medium');
                     searchInput.addEventListener('input', filterWriteups);
+                    filterWriteups();
                 })
                 .catch(error => {
                     console.error("Fetch Error:", error);
@@ -321,6 +371,7 @@
                     errorDisplay.style.display = 'block';
                 });
         }
+
         fetchWriteups();
     </script>
 </body>
