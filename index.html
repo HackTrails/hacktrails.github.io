@@ -7,22 +7,156 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .generic-title-font { font-family: 'Orbitron', sans-serif; letter-spacing: 0.05em; text-transform: uppercase; }
-        body.dark { background-color: #1a202c; color: #f7fafc; }
-        body.dark .bg-white { background-color: #2d3748; }
-        body.dark .text-gray-800 { color: #f7fafc; }
-        body.dark .text-gray-700 { color: #edf2f7; }
-        body.dark .text-gray-600 { color: #cbd5e0; }
-        body.dark .text-gray-500 { color: #a0aec0; }
-        body.dark .border-gray-300 { border-color: #4a5568; }
-        body.dark [data-dark-bg="gray-200"] { background-color: #4a5568; }
-        body.dark [data-dark-bg="blue-500"] { background-color: #4299e1; }
-        body.dark [data-dark-border="blue-500"] { border-color: #4299e1; }
-        body.dark [data-dark-bg="blue-600"] { background-color: #3883d7; }
-        body.dark select, body.dark #search-input { background-color: #2d3748; color: #f7fafc; border-color: #4a5568; }
-        body.dark select option { background-color: #2d3748; color: #f7fafc; }
-        body.dark #search-input::placeholder { color: #a0aec0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+        }
+        .generic-title-font {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-content a {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+        .btn {
+            background: linear-gradient(45deg, #00d4ff, #00ff7f);
+            border: none;
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            color: #1a1a2e;
+            font-weight: 600;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+        .input-field {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+            color: #e0e0e0;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+        .input-field:focus {
+            border-color: #00ff7f;
+            transform: scale(1.02);
+            outline: none;
+        }
+        .checkbox-custom {
+            accent-color: #00ff7f;
+            width: 1.2em;
+            height: 1.2em;
+            margin-right: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+        .checkbox-custom:checked {
+            transform: scale(1.1);
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .loading-orb {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #00d4ff, #00ff7f);
+            animation: spin 1.5s linear infinite;
+        }
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .nav-menu a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .nav-menu a:hover {
+            color: #00ff7f;
+            transform: scale(1.1);
+        }
+        .footer {
+            text-align: center;
+            padding: 1rem;
+            color: #a0a0a0;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .footer img {
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+        .footer img:hover {
+            transform: scale(1.1);
+        }
+        h1 {
+            color: #00d4ff;
+        }
+        @media (max-width: 640px) {
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: #16213e;
+                padding: 1rem;
+                z-index: 10;
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .hamburger {
+                display: block;
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: #e0e0e0;
+            }
+            .footer {
+                bottom: 10px;
+                right: 10px;
+            }
+        }
     </style>
 </head>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VNG8CTJEQ6"></script>
@@ -32,68 +166,73 @@
   gtag('js', new Date());
   gtag('config', 'G-VNG8CTJEQ6');
 </script>
-<body class="bg-gray-100 p-6 relative">
-    <button id="darkModeToggle" class="absolute top-4 right-4 bg-transparent border-none cursor-pointer text-2xl p-1 opacity-80 hover:opacity-100" aria-label="Toggle Dark Mode"></button>
-    <div class="container max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
-        <h1 class="text-3xl font-semibold text-blue-600 text-center mb-6 generic-title-font">Hack Trails</h1>
-        <p class="text-lg text-gray-700 text-center mb-8">Bug Bounty Writeups & Disclosures</p>
+<body class="min-h-screen p-6 relative">
+    <button id="hamburger" class="hamburger md:hidden absolute top-4 left-4">☰</button>
+    <div class="container max-w-6xl mx-auto bg-transparent rounded-xl p-8">
+        <div class="nav-menu md:flex hidden">
+            <a href="index.html" class="generic-title-font">Home</a>
+            <a href="contact.html" class="generic-title-font">Contact</a>
+        </div>
+        <h1 class="text-4xl font-bold text-center mb-8 generic-title-font">Hack Trails</h1>
+        <p class="text-lg text-gray-300 text-center mb-10">Bug Bounty Writeups & Disclosures</p>
+        <div class="mb-6">
+            <input type="text" id="search-input" placeholder="Search by title, author..." class="w-full input-field text-lg placeholder-gray-400">
+        </div>
         <div class="mb-6 flex items-center space-x-4">
-            <input type="text" id="search-input" placeholder="Search by title, author..." class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            <label for="itemsPerPage" class="text-sm font-medium text-gray-300">Items per page:</label>
+            <select id="itemsPerPage" class="input-field text-sm"></select>
         </div>
-        <div class="mb-4 flex items-center space-x-4">
-            <label for="itemsPerPage" class="text-sm font-medium text-gray-700">Items per page:</label>
-            <select id="itemsPerPage" class="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></select>
-        </div>
-        <div class="mb-4 flex items-center space-x-4">
-            <span class="text-sm font-medium text-gray-700">Source:</span>
+        <div class="mb-6 flex items-center space-x-4">
+            <span class="text-sm font-medium text-gray-300">Source:</span>
             <label class="flex items-center space-x-2">
-                <input type="checkbox" id="source-hackerone" value="hackerone" class="h-4 w-4 text-blue-500 border-gray-300 rounded focus:ring-blue-500">
-                <span class="text-sm text-gray-700">HackerOne</span>
+                <input type="checkbox" id="source-hackerone" value="hackerone" class="checkbox-custom">
+                <span class="text-sm text-gray-300">HackerOne</span>
             </label>
             <label class="flex items-center space-x-2">
-                <input type="checkbox" id="source-medium" value="medium" class="h-4 w-4 text-blue-500 border-gray-300 rounded focus:ring-blue-500">
-                <span class="text-sm text-gray-700">Medium</span>
+                <input type="checkbox" id="source-medium" value="medium" class="checkbox-custom">
+                <span class="text-sm text-gray-300">Medium</span>
             </label>
         </div>
-        <div id="loading-indicator" class="text-center py-4 hidden">
-            <svg class="animate-spin h-5 w-5 text-blue-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            <p class="mt-2 text-gray-500">Loading writeups...</p>
+        <div class="mb-6 flex justify-end">
+            <button id="view-saved" class="btn">View Saved</button>
         </div>
-        <div id="error-display" class="text-center text-red-500 py-4 hidden"></div>
-        <div id="writeups-list" class="space-y-4"></div>
-        <div id="pagination-controls" class="flex justify-center mt-6 space-x-2"></div>
+        <div id="loading-indicator" class="text-center py-6 hidden">
+            <div class="loading-orb mx-auto"></div>
+            <p class="mt-2 text-gray-400">Loading writeups...</p>
+        </div>
+        <div id="error-display" class="text-center text-red-400 py-6 hidden"></div>
+        <div id="writeups-list" class="card-grid"></div>
+        <div id="pagination-controls" class="flex justify-center mt-8 space-x-2"></div>
+    </div>
+    <div class="footer">
+        <a href="https://buymeacoffee.com/hacktrails" target="_blank">
+            <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me a Coffee">
+        </a>
     </div>
     <script>
         const $ = id => document.getElementById(id);
         const list = $('writeups-list'), load = $('loading-indicator'), error = $('error-display'), search = $('search-input'),
-              pages = $('pagination-controls'), toggle = $('darkModeToggle'), body = document.body,
-              perPage = $('itemsPerPage'), h1Check = $('source-hackerone'), medCheck = $('source-medium');
-        
-        let writeups = [], filtered = [], itemsPerPage = parseInt(localStorage.getItem('itemsPerPage')) || 5,
-            sources = JSON.parse(localStorage.getItem('sourceFilter')) || ['hackerone', 'medium'], page = 1;
+              pages = $('pagination-controls'), body = document.body,
+              perPage = $('itemsPerPage'), h1Check = $('source-hackerone'), medCheck = $('source-medium'), viewSaved = $('view-saved'),
+              hamburger = $('hamburger'), navMenu = document.querySelector('.nav-menu');
+
+        let writeups = [], filtered = [], saved = JSON.parse(localStorage.getItem('savedWriteups')) || [];
+        saved = saved.map(w => ({
+            ...w,
+            published_date: w.published_date ? new Date(w.published_date) : null
+        })),
+        itemsPerPage = parseInt(localStorage.getItem('itemsPerPage')) || 5,
+        sources = JSON.parse(localStorage.getItem('sourceFilter')) || ['hackerone', 'medium'],
+        page = 1, isSavedMode = false;
 
         const icons = {
-            moon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-fill" viewBox="0 0 16 16"><path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.318q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/></svg>`,
-            sun: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sun-fill" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/></svg>`
+            bookmark: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16"><path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.543a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/></svg>`,
+            bookmarkFill: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16"><path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2"/></svg>`
         };
 
-        const toggleDark = () => {
-            body.classList.toggle('dark');
-            const dark = body.classList.contains('dark');
-            localStorage.setItem('darkMode', dark);
-            toggle.innerHTML = dark ? icons.sun : icons.moon;
-        };
-
-        if (localStorage.getItem('darkMode') === 'true') {
-            body.classList.add('dark');
-            toggle.innerHTML = icons.sun;
-        } else {
-            toggle.innerHTML = icons.moon;
-        }
-        toggle.addEventListener('click', toggleDark);
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
 
         [5, 10, 20, 50, 100].forEach(v => {
             const opt = document.createElement('option');
@@ -124,40 +263,73 @@
         h1Check.addEventListener('change', updateSources);
         medCheck.addEventListener('change', updateSources);
 
+        const toggleSavedMode = () => {
+            isSavedMode = !isSavedMode;
+            viewSaved.textContent = isSavedMode ? 'View All' : 'View Saved';
+            page = 1;
+            filter();
+        };
+
+        viewSaved.addEventListener('click', toggleSavedMode);
+
+        const saveWriteup = w => {
+            const writeup = { ...w };
+            if (writeup.published_date instanceof Date && !isNaN(writeup.published_date)) {
+                // No change needed; Date will be stringified as ISO
+            } else if (typeof writeup.published_date === 'string') {
+                writeup.published_date = new Date(writeup.published_date);
+            }
+            if (saved.some(s => s.link === writeup.link)) {
+                saved = saved.filter(s => s.link !== writeup.link);
+            } else {
+                saved.push(writeup);
+            }
+            localStorage.setItem('savedWriteups', JSON.stringify(saved));
+            show(isSavedMode ? saved : filtered);
+        };
+
         const createWriteup = w => {
             const div = document.createElement('div');
-            div.className = 'bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500';
+            div.className = 'card';
+            const content = document.createElement('div');
+            content.className = 'card-content';
             const a = document.createElement('a');
             a.href = w.link || '#';
             a.target = '_blank';
             a.rel = 'noopener noreferrer';
-            a.className = 'text-xl font-semibold text-gray-800 mb-2 hover:underline';
+            a.className = 'text-2xl font-semibold text-[#00d4ff] mb-2 hover:text-[#00ff7f] transition-colors duration-300';
             a.textContent = w.title || 'No Title';
-            div.appendChild(a);
+            content.appendChild(a);
             const p1 = document.createElement('p');
-            p1.className = 'text-gray-600 mb-1';
+            p1.className = 'text-gray-400 mb-1';
             let author = w.author?.replace(/@?\.medium\.com$/, '').trim() || 'Unknown';
             p1.textContent = `Author: ${author}`;
-            div.appendChild(p1);
+            content.appendChild(p1);
             const p2 = document.createElement('p');
             p2.className = 'text-gray-500 text-sm mb-2';
             let date = w.published_date instanceof Date && !isNaN(w.published_date) 
                 ? w.published_date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) 
                 : 'Unknown';
             p2.textContent = `Published: ${date}`;
-            div.appendChild(p2);
+            content.appendChild(p2);
             if (w.hacktivity_summary) {
                 const p3 = document.createElement('p');
-                p3.className = 'text-gray-700 mb-3';
+                p3.className = 'text-gray-300 mb-3';
                 p3.textContent = w.hacktivity_summary;
-                div.appendChild(p3);
+                content.appendChild(p3);
             }
+            div.appendChild(content);
+            const saveBtn = document.createElement('button');
+            saveBtn.className = 'text-[#00ff7f] hover:text-[#00d4ff] transition-colors duration-300 self-end';
+            saveBtn.innerHTML = saved.some(s => s.link === w.link) ? icons.bookmarkFill : icons.bookmark;
+            saveBtn.addEventListener('click', () => saveWriteup(w));
+            div.appendChild(saveBtn);
             return div;
         };
 
         const show = w => {
             list.innerHTML = '';
-            error.className = 'text-center text-red-500 py-4 hidden';
+            error.className = 'text-center text-red-400 py-6 hidden';
             const start = (page - 1) * itemsPerPage, end = start + itemsPerPage, slice = w.slice(start, end);
             if (!slice.length && w.length) {
                 page = Math.max(1, Math.ceil(w.length / itemsPerPage));
@@ -165,8 +337,8 @@
                 return;
             }
             if (!slice.length) {
-                error.textContent = 'No writeups found.';
-                error.className = 'text-center text-red-500 py-4';
+                error.textContent = isSavedMode ? 'No saved writeups.' : 'No writeups found.';
+                error.className = 'text-center text-red-400 py-6';
                 pages.innerHTML = '';
                 return;
             }
@@ -179,31 +351,41 @@
             const total = Math.ceil(w.length / itemsPerPage);
             if (total <= 1) return;
             for (let i = 1; i <= total; i++) {
-                const btn = document.createElement('button');
-                btn.textContent = i;
-                btn.className = `px-3 py-1 rounded border border-gray-300 hover:bg-gray-200 data-[dark-bg=gray-200] ${i === page ? 'bg-blue-500 text-white border-blue-500 hover:bg-blue-600 data-[dark-bg=blue-500] data-[dark-border=blue-500] data-[dark-bg=blue-600]' : ''}`;
-                btn.addEventListener('click', () => {
+                const link = document.createElement('a');
+                link.href = '#';
+                link.textContent = i;
+                link.className = `mx-1 ${i === page ? 'text-[#00ff7f]' : 'text-[#e0e0e0] hover:text-[#00ff7f]'}`;
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
                     page = i;
-                    show(filtered);
+                    show(isSavedMode ? saved : filtered);
                 });
-                pages.appendChild(btn);
+                pages.appendChild(link);
             }
         };
 
         const filter = () => {
             const term = search.value.toLowerCase().trim();
-            filtered = writeups.filter(w => (sources.length ? sources.includes(w.source) : false) && (
-                w.title?.toLowerCase().includes(term) ||
-                w.author?.toLowerCase().includes(term) ||
-                w.hacktivity_summary?.toLowerCase().includes(term)
-            ));
+            if (isSavedMode) {
+                filtered = saved.filter(w => (
+                    w.title?.toLowerCase().includes(term) ||
+                    w.author?.toLowerCase().includes(term) ||
+                    w.hacktivity_summary?.toLowerCase().includes(term)
+                ));
+            } else {
+                filtered = writeups.filter(w => (sources.length ? sources.includes(w.source) : false) && (
+                    w.title?.toLowerCase().includes(term) ||
+                    w.author?.toLowerCase().includes(term) ||
+                    w.hacktivity_summary?.toLowerCase().includes(term)
+                ));
+            }
             page = 1;
             show(filtered);
         };
 
         const fetchWriteups = async () => {
-            load.className = 'text-center py-4';
-            error.className = 'text-center text-red-500 py-4 hidden';
+            load.className = 'text-center py-6';
+            error.className = 'text-center text-red-400 py-6 hidden';
             list.innerHTML = pages.innerHTML = '';
             try {
                 const res = await fetch('https://get-writeups-5kluvqgioa-uc.a.run.app/get_writeups');
@@ -217,15 +399,15 @@
                     }
                     return { ...item, published_date: date };
                 }).sort((a, b) => (b.published_date?.getTime() || 0) - (a.published_date?.getTime() || 0));
-                load.className = 'text-center py-4 hidden';
+                load.className = 'text-center py-6 hidden';
                 h1Check.checked = sources.includes('hackerone');
                 medCheck.checked = sources.includes('medium');
                 search.addEventListener('input', filter);
                 filter();
             } catch (e) {
-                load.className = 'text-center py-4 hidden';
+                load.className = 'text-center py-6 hidden';
                 error.textContent = 'Failed to load writeups. Please try again later.';
-                error.className = 'text-center text-red-500 py-4';
+                error.className = 'text-center text-red-400 py-6';
             }
         };
 
