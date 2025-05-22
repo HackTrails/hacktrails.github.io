@@ -112,6 +112,9 @@
             color: #00ff7f;
             transform: scale(1.1);
         }
+        .container {
+            padding-bottom: 120px; /* Increased padding to prevent overlap with footer */
+        }
         .footer {
             text-align: center;
             padding: 1rem;
@@ -127,6 +130,9 @@
         }
         .footer img:hover {
             transform: scale(1.1);
+        }
+        #pagination-controls {
+            margin-bottom: 20px; /* Add margin to pagination to ensure separation */
         }
         h1 {
             color: #00d4ff;
@@ -153,7 +159,7 @@
                 color: #e0e0e0;
             }
             .footer {
-                bottom: 10px;
+                bottom: 10px; /* Adjusted for better spacing */
                 right: 10px;
             }
         }
@@ -350,7 +356,55 @@
             pages.innerHTML = '';
             const total = Math.ceil(w.length / itemsPerPage);
             if (total <= 1) return;
-            for (let i = 1; i <= total; i++) {
+
+            const maxPagesToShow = 5; // Show 5 page numbers at a time (adjust as needed)
+            const half = Math.floor(maxPagesToShow / 2);
+            let start = Math.max(1, page - half);
+            let end = Math.min(total, start + maxPagesToShow - 1);
+
+            // Adjust start if we're near the end
+            if (end === total) {
+                start = Math.max(1, end - maxPagesToShow + 1);
+            }
+
+            // Add "Previous" button with <
+            const prev = document.createElement('a');
+            prev.href = '#';
+            prev.textContent = '<';
+            prev.className = `mx-1 ${page === 1 ? 'text-gray-500 cursor-not-allowed' : 'text-[#e0e0e0] hover:text-[#00ff7f]'}`;
+            if (page !== 1) {
+                prev.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    page--;
+                    show(isSavedMode ? saved : filtered);
+                });
+            }
+            pages.appendChild(prev);
+
+            // Add first page and ellipsis if needed
+            if (start > 1) {
+                const first = document.createElement('a');
+                first.href = '#';
+                first.textContent = '1';
+                first.className = 'mx-1 text-[#e0e0e0] hover:text-[#00ff7f]';
+                first.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    page = 1;
+                    show(isSavedMode ? saved : filtered);
+                    pages.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); // Keep focus on pagination
+                });
+                pages.appendChild(first);
+
+                if (start > 2) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.textContent = '...';
+                    ellipsis.className = 'mx-1 text-[#e0e0e0]';
+                    pages.appendChild(ellipsis);
+                }
+            }
+
+            // Add page numbers in the calculated range
+            for (let i = start; i <= end; i++) {
                 const link = document.createElement('a');
                 link.href = '#';
                 link.textContent = i;
@@ -359,9 +413,46 @@
                     e.preventDefault();
                     page = i;
                     show(isSavedMode ? saved : filtered);
+                    pages.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); // Keep focus on pagination
                 });
                 pages.appendChild(link);
             }
+
+            // Add ellipsis and last page if needed
+            if (end < total) {
+                if (end < total - 1) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.textContent = '...';
+                    ellipsis.className = 'mx-1 text-[#e0e0e0]';
+                    pages.appendChild(ellipsis);
+                }
+
+                const last = document.createElement('a');
+                last.href = '#';
+                last.textContent = total;
+                last.className = 'mx-1 text-[#e0e0e0] hover:text-[#00ff7f]';
+                last.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    page = total;
+                    show(isSavedMode ? saved : filtered);
+                    pages.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); // Keep focus on pagination
+                });
+                pages.appendChild(last);
+            }
+
+            // Add "Next" button with >
+            const next = document.createElement('a');
+            next.href = '#';
+            next.textContent = '>';
+            next.className = `mx-1 ${page === total ? 'text-gray-500 cursor-not-allowed' : 'text-[#e0e0e0] hover:text-[#00ff7f]'}`;
+            if (page !== total) {
+                next.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    page++;
+                    show(isSavedMode ? saved : filtered);
+                });
+            }
+            pages.appendChild(next);
         };
 
         const filter = () => {
